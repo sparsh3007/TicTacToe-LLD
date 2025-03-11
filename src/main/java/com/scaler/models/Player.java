@@ -1,5 +1,7 @@
 package com.scaler.models;
 
+import java.util.Scanner;
+
 public class Player {
     private String name;
     private char symbol;
@@ -32,5 +34,15 @@ public class Player {
 
     public void setPlayerType(PlayerType playerType) {
         this.playerType = playerType;
+    }
+
+    public Move decideMove(Board board) {
+        // Get the input from the player where to place the symbol
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the row and column to place the symbol (0-indexed): ");
+        int row = sc.nextInt();
+        int col = sc.nextInt();
+
+        return new Move(this, board.getBoard().get(row).get(col));
     }
 }

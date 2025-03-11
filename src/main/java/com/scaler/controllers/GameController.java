@@ -35,6 +35,7 @@ public class GameController {
         // Validate move
         // Update game state
         // Check for win or draw
+        game.makeNextMove();
     }
 
     public void displayBoard(Game game) {

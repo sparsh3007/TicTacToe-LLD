@@ -3,6 +3,8 @@ package com.scaler.models;
 import com.scaler.exceptions.InvalidDimensionException;
 import com.scaler.exceptions.InvalidPlayerNumberOfPlayersException;
 import com.scaler.exceptions.InvalidPlayerSymbolException;
+import com.scaler.strategies.winningstrategy.GameWinningStrategy;
+import com.scaler.strategies.winningstrategy.OrderOneWinningStrategy;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,6 +17,7 @@ public class Game {
     GameStatus gameStatus;
     int nextPlayerIndex;
     Player winner;
+    GameWinningStrategy gameWinningStrategy;
 
     private Game(){}
 
@@ -72,8 +75,60 @@ public class Game {
         this.winner = winner;
     }
 
+    public GameWinningStrategy getGameWinningStrategy() {
+        return gameWinningStrategy;
+    }
+
+    public void setGameWinningStrategy(GameWinningStrategy gameWinningStrategy) {
+        this.gameWinningStrategy = gameWinningStrategy;
+    }
+
     public void displayBoard() {
         board.displayBoard();
+    }
+
+    public void makeNextMove() {
+        // 1. Get the current player
+        Player currentPlayer = players.get(nextPlayerIndex);
+
+        // 2. Player should decide where to play
+        System.out.println("Player " + currentPlayer.getName() + "'s turn. Please make your move.");
+        Move move = currentPlayer.decideMove(this.getBoard());
+
+        // 3. Validate the move
+        // Check if the cell is within the bounds of the board
+        Cell cell = move.getCell();
+        if (cell.getRow() < 0 || cell.getRow() >= board.getBoard().size() ||
+                cell.getCol() < 0 || cell.getCol() >= board.getBoard().get(0).size()) {
+            System.out.println("Invalid move. Cell is out of bounds. Try again.");
+            // Ask the player to decide again
+            makeNextMove();
+        }
+        // Check if the cell is empty
+        else if (cell.getCellState() != CellState.EMPTY) {
+            System.out.println("Invalid move. Cell is already occupied. Try again.");
+            // Ask the player to decide again
+            makeNextMove();
+        }
+
+        // 4. If move is valid, update the board and move list
+        else {
+            int row = cell.getRow();
+            int col = cell.getCol();
+            System.out.println("Player " + currentPlayer.getName() + " made a move at (" + row + ", " + col + ")");
+            board.getBoard().get(row).get(col).setCellState(CellState.FILLED);
+            board.getBoard().get(row).get(col).setPlayer(currentPlayer);
+            moves.add(move);
+
+            // 5. Check if the game is over (win or draw)
+            if (gameWinningStrategy.checkWinner(board, currentPlayer, cell)) {
+                System.out.println("Player " + currentPlayer.getName() + " wins!");
+                gameStatus = GameStatus.ENDED;
+                winner = currentPlayer;
+            }
+            // 6. Move to the next player
+            nextPlayerIndex = (nextPlayerIndex + 1) % players.size();
+        }
     }
 
     public static class GameBuilder{
@@ -117,6 +172,7 @@ public class Game {
             game.moves = new ArrayList<>();
             game.gameStatus = GameStatus.IN_PROGRESS;
             game.nextPlayerIndex = 0;
+            game.setGameWinningStrategy(new OrderOneWinningStrategy(dimension));
             return game;
         }
     }

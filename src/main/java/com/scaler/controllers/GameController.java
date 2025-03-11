@@ -44,8 +44,9 @@ public class GameController {
         // Or game.getBoard().displayBoard();
     }
 
-    public void undoMove() {
+    public void undoMove(Game game) {
         // Undo the last move
+        game.undoLastMove();
     }
 
     public GameStatus getGameStatus(Game game) {

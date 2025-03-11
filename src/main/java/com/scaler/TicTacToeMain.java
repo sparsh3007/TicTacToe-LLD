@@ -55,7 +55,7 @@ public class TicTacToeMain {
                 System.out.println("Do you want to undo the last move? (yes/no):");
                 String undoMove = scanner.next();
                 if (undoMove.equalsIgnoreCase("yes")) {
-                    gameController.undoMove();
+                    gameController.undoMove(game);
                     continue;
                 }
                 gameController.makeMove(game);

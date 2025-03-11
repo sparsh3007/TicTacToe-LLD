@@ -6,4 +6,6 @@ import com.scaler.models.Player;
 
 public interface GameWinningStrategy {
     boolean checkWinner(Board board, Player player, Cell moveCell);
+
+    void undoMove(Cell cell);
 }

@@ -38,6 +38,7 @@ public class Player {
 
     public Move decideMove(Board board) {
         // Get the input from the player where to place the symbol
+        System.out.println("Player " + this.getName() + " (" + this.getSymbol() + "), it's your turn.");
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the row and column to place the symbol (0-indexed): ");
         int row = sc.nextInt();

@@ -57,4 +57,20 @@ public class OrderOneWinningStrategy implements  GameWinningStrategy {
         }
         return false;
     }
+
+    @Override
+    public void undoMove(Cell cell) {
+        // Undo the move by decrementing the count of the symbol in the row, column, and diagonal
+        int row = cell.getRow();
+        int col = cell.getCol();
+        char symbol = cell.getPlayer().getSymbol();
+        rowSymbolCount.get(row).put(symbol, rowSymbolCount.get(row).get(symbol) - 1);
+        colSymbolCount.get(col).put(symbol, colSymbolCount.get(col).get(symbol) - 1);
+        if(row == col){
+            topLeftDiagonalSymbolCount.put(symbol, topLeftDiagonalSymbolCount.get(symbol) - 1);
+        }
+        if(row + col == rowSymbolCount.size() - 1){
+            topRightDiagonalSymbolCount.put(symbol, topRightDiagonalSymbolCount.get(symbol) - 1);
+        }
+    }
 }

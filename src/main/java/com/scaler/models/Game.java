@@ -120,15 +120,36 @@ public class Game {
             board.getBoard().get(row).get(col).setPlayer(currentPlayer);
             moves.add(move);
 
-            // 5. Check if the game is over (win or draw)
+            // 5. Check if the player has won
             if (gameWinningStrategy.checkWinner(board, currentPlayer, cell)) {
                 System.out.println("Player " + currentPlayer.getName() + " wins!");
                 gameStatus = GameStatus.ENDED;
                 winner = currentPlayer;
             }
+            // Check if the board is full or the game is a draw
+            else if (moves.size() == board.getBoard().size() * board.getBoard().getFirst().size()) {
+                gameStatus = GameStatus.DRAW;
+            }
             // 6. Move to the next player
             nextPlayerIndex = (nextPlayerIndex + 1) % players.size();
         }
+    }
+
+    public void undoLastMove() {
+        if (moves.size() == 0) {
+            System.out.println("No moves to undo.");
+            return;
+        }
+        Move lastMove = moves.remove(moves.size() - 1);
+        Cell cell = lastMove.getCell();
+        // Undo the last move in the gameWinningStrategy
+        gameWinningStrategy.undoMove(cell);
+
+        // Update the board
+        board.getBoard().get(cell.getRow()).get(cell.getCol()).setCellState(CellState.EMPTY);
+        board.getBoard().get(cell.getRow()).get(cell.getCol()).setPlayer(null);
+        nextPlayerIndex = (nextPlayerIndex - 1 + players.size()) % players.size();
+
     }
 
     public static class GameBuilder{

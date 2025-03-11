@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="305a07c5-17fc-4ca3-920d-1038113df00f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/scaler/strategies/winningstrategy/OrderOneWinningStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/scaler/strategies/botplayingstrategy/RandomBotPlayingStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/scaler/TicTacToeMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/scaler/TicTacToeMain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/scaler/controllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/scaler/controllers/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/scaler/models/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/scaler/models/Bot.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/scaler/models/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/scaler/models/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/scaler/models/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/scaler/models/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/scaler/strategies/botplayingstrategy/BotPlayingStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/scaler/strategies/botplayingstrategy/BotPlayingStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/scaler/strategies/winningstrategy/GameWinningStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/scaler/strategies/winningstrategy/GameWinningStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/scaler/strategies/winningstrategy/OrderOneWinningStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/scaler/strategies/winningstrategy/OrderOneWinningStrategy.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +118,7 @@
       <option name="presentableId" value="Default" />
       <updated>1741619974818</updated>
       <workItem from="1741619975720" duration="7143000" />
-      <workItem from="1741688642958" duration="7686000" />
+      <workItem from="1741688642958" duration="12163000" />
     </task>
     <servers />
   </component>

@@ -1,5 +1,11 @@
 package com.scaler.models;
 
+import com.scaler.exceptions.InvalidDimensionException;
+import com.scaler.exceptions.InvalidPlayerNumberOfPlayersException;
+import com.scaler.exceptions.InvalidPlayerSymbolException;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Game {
@@ -8,17 +14,16 @@ public class Game {
     List<Move> moves;
     GameStatus gameStatus;
     int nextPlayerIndex;
-    int winnerIndex;
+    Player winner;
 
-    public Game(Board board, List<Player> players, List<Move> moves, GameStatus gameStatus, int nextPlayerIndex, int winnerIndex) {
-        this.board = board;
-        this.players = players;
-        this.moves = moves;
-        this.gameStatus = gameStatus;
-        this.nextPlayerIndex = nextPlayerIndex;
-        this.winnerIndex = winnerIndex;
+    private Game(){}
+
+    private Game(GameBuilder builder){
+        this.players = builder.players;
     }
-
+    public static GameBuilder getBuilder() {
+        return new GameBuilder();
+    }
     public Board getBoard() {
         return board;
     }
@@ -59,11 +64,60 @@ public class Game {
         this.nextPlayerIndex = nextPlayerIndex;
     }
 
-    public int getWinnerIndex() {
-        return winnerIndex;
+    public  Player getWinner() {
+        return winner;
     }
 
-    public void setWinnerIndex(int winnerIndex) {
-        this.winnerIndex = winnerIndex;
+    public void setWinner(Player winner) {
+        this.winner = winner;
+    }
+
+    public void displayBoard() {
+        board.displayBoard();
+    }
+
+    public static class GameBuilder{
+        private int dimension;
+        private List<Player> players;
+
+
+        public GameBuilder setDimension(int dimension) {
+            this.dimension = dimension;
+            return this;
+        }
+
+        public GameBuilder setPlayers(List<Player> players) {
+            this.players = players;
+            return this;
+        }
+        private void isValid() throws InvalidDimensionException, InvalidPlayerNumberOfPlayersException, InvalidPlayerSymbolException {
+            if(this.dimension <3){
+                throw new InvalidDimensionException("Dimension should be greater than or equal to 3");
+            }
+            if(this.players.size()!=this.dimension-1){
+                throw new InvalidPlayerNumberOfPlayersException("Number of players should be equal to dimension - 1");
+            }
+            HashSet<Character>  symbols = new HashSet<>();
+            for(int i=0;i<players.size();i++) {
+                if (symbols.contains(players.get(i).getSymbol())) {
+                    throw new InvalidPlayerSymbolException("Symbols should be unique");
+                }
+                symbols.add(players.get(i).getSymbol());
+            }
+        }
+        public Game build() {
+            try {
+                isValid();
+            } catch (InvalidDimensionException | InvalidPlayerNumberOfPlayersException | InvalidPlayerSymbolException e) {
+                System.out.println(e.getMessage());
+            }
+            Game game = new Game();
+            game.board = new Board(dimension);
+            game.players = players;
+            game.moves = new ArrayList<>();
+            game.gameStatus = GameStatus.IN_PROGRESS;
+            game.nextPlayerIndex = 0;
+            return game;
+        }
     }
 }
